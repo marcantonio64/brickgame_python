@@ -32,7 +32,7 @@ Then run the game package with:
 python -m brickgame_tkinter
 ```
 
-If you want to play a specific game directly, simply add `\games\` and
+If you want to play a specific game directly, simply add `.games.` and
 the name of the game in lowercase. For instance:
 
 ```shell
