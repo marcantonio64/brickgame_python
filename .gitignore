@@ -1,0 +1,5 @@
+.vscode/
+__pycache__/
+games/__pycache__/
+tests/__pycache/
+screens/desktop.ini
