@@ -5,12 +5,12 @@ Brick Game with tkinter
 This package contains the implementation of a client with some simple
 games. The user will find:
 
-* A selector interface;
-* A snake game;
-* A breakout game;
+* A selector interface
+* A snake game
+* A breakout game
 * An asteroids game
-* A tetris game;
-* A High Scores screen.
+* A tetris game
+* A High Scores screen
 
 All these elements were built using `Block` objects as pixels in a
 10x20 grid environment.
