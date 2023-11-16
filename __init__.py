@@ -18,7 +18,7 @@ All these elements were built using `Block` objects as pixels in a
 .. Metadata:
 .. author:: marcantonio64
 .. date:: 11-Nov-2023
-.. version:: 1.0
+.. version:: 1.1
 .. license:: MIT
 .. contact:: mafigueiredo08@gmail.com
 .. _`brickgame_tkinter`:

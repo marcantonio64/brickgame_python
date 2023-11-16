@@ -1,6 +1,7 @@
 """ Establishing the basic structure of the client. """
 
 import os
+import time
 import tkinter as tk
 from _tkinter import TclError
 from PIL import Image, ImageTk
@@ -64,16 +65,24 @@ class BaseClient(ABC):
             "<KeyRelease>",
             lambda event: self._handle_events(event, False)
         )
-
+        
+        # Managing time intervals and fps.
         self.ticks = 0
+        self.__delay = TICK_RATE
+        self.__last_time = None
+        self.__cur_time = time.perf_counter()
 
     def _loop(self):
         """ A hidden method avoids looping the parent class instead. """
 
         self.ticks += 1
         self.loop()
+        self.__last_time = self.__cur_time
+        self.__cur_time = time.perf_counter()
+        # Removing the extra time since the last loop from the reference. 
+        self.__delay -= 1000*(self.__cur_time - self.__last_time) - TICK_RATE
         # A canvas.after() call to the same function creates a loop.
-        after_id = self.canvas.after(TICK_RATE, self._loop)
+        after_id = self.canvas.after(round(self.__delay), self._loop)
         # Making sure the program ends when the window is closed.
         def close():
             self.canvas.after_cancel(after_id)
