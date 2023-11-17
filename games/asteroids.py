@@ -52,7 +52,7 @@ class Asteroids(Game):
         super().__init__(source)
         self.asteroids_speed = 2  # Falling speed.
         self.speed = self.asteroids_speed
-        self.shooter_mvspeed = 15
+        self.shooter_mvspeed = 10
         self.game_ticks = 0  # Internal timer for the game.
 
         # Spawn the entities.
