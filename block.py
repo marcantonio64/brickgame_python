@@ -339,7 +339,7 @@ class Bomb:
         """
 
         i, j = CONVERT[direction]
-        for bomb in Bomb._bombs:
+        for bomb in Bomb._bombs[::-1]:
             # Start the movement of each component through
             # `.set_position()`.
             for block in bomb:
