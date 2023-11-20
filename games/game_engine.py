@@ -141,8 +141,8 @@ class Game(ABC):
         
         # Update the highest score to the .json file.
         if self.score > self.highest_score:
-            if self.score >= 10**8:
-                self.score = 10**8 - 1  # Max value
+            if self.score >= 1e8:
+                self.score = int(1e8 - 1)  # Max value
             else:
                 self.highest_score = self.score
             try: 
