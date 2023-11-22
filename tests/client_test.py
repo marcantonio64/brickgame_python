@@ -102,17 +102,27 @@ class Client11:
 def main(args):
     """ Output-generating commands. """
 
-    m = int(args[1])
-    if m:
-        if m < 4:
-            # Testing `BaseClient`'s implementations
-            exec(f"client = Client{m}(); client.start()")
-        elif m < 12:
-            # Testing `has_window_and_canvas()`
-            exec(f"client = Client{m}(); print(has_window_and_canvas(Client{m}))")
+    if len(args) != 2:
+        print("Please provide one argument to specify the class, for example:")
+        print("python -m brickgame_tkinter.tests.client_test 1")
     else:
-        print(AbsentWindowOrCanvasError("arg"))
-        raise AbsentWindowOrCanvasError("arg")
+        try:
+            m = int(args[1])
+        except ValueError:
+            print("The argument should be a positive integer.")
+            exit()
+        if m:
+            if int(m) < 4:
+                # Testing `BaseClient`'s implementations
+                exec(f"client = Client{m}(); client.start()")
+            elif int(m) < 12:
+                # Testing `has_window_and_canvas()`
+                exec(f"client = Client{m}(); print(has_window_and_canvas(Client{m}))")
+            else:
+                print(f"Client{m} was not implemented yet.")
+        else:
+            print(AbsentWindowOrCanvasError("arg"))
+            raise AbsentWindowOrCanvasError("arg")
 
 
 if __name__ == '__main__':
