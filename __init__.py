@@ -13,7 +13,7 @@ games. The user will find:
 * A High Scores screen
 
 All these elements were built using `Block` objects as pixels in a
-10x20 grid environment.
+20x10 grid environment.
 
 .. Metadata:
 .. author:: marcantonio64

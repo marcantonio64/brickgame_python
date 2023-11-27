@@ -8,7 +8,7 @@ asteroids, and tetris.
 
 > Minimum python version: 3.6. 
 
-The aspect is of a 10x20 grid of `Block` objects, which are used
+The aspect is of a 20x10 grid of `Block` objects, which are used
 as pixels for the construction of each game.
 
 > A `Block` is drawn to a `tkinter.Canvas` object as an outer

@@ -10,7 +10,7 @@ __all__ = ["Game"]
 
 class Game(ABC):
     """
-    Engine for pixel games in a 10x20 grid.
+    Engine for pixel games in a 20x10 grid.
 
     Attributes
     ----------
