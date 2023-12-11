@@ -44,7 +44,7 @@ class Tetris(Game):
         """
 
         super().__init__(source)
-        self.__start = 0
+        self.__start = 1
         self.speed = Tetris.start_speed  # Fall speed (in `Block`s per second).
 
         # Spawn the entities.
@@ -55,11 +55,11 @@ class Tetris(Game):
         self.add_tags()
 
     def _detect_game_on(self):
-        """ Prevent the first preview from showing in the main client. """
+        """ Prints a first preview only when the game is played. """
 
-        if self.__start < 1:
-            self.piece.preview()
-        self.__start += 1
+        if not self.__start:
+            self.piece.print_preview()
+        self.__start -= 1
     
     def handle_events(self, key, press):
         """
@@ -118,16 +118,16 @@ class Tetris(Game):
             if t % int(FPS/self.speed) == 0:
                 self.piece.move("down")  # Slow fall
                 self.try_spawn_next()
-            
-            # Adjust for movement proportional to the scaling speed
-            if t % int(FPS/(7 + 3*self.speed)) == 0:
-                # Horizontal movement and downwards acceleration.
-                self.piece.move(self.piece.direction)
 
             # `speed` scales over time, every 30 seconds.
             if self.speed <= 10:
                 if t % (30*FPS) == 0:
                     self.speed *= 10**0.05
+            
+            # Adjust for movement proportional to the scaling speed
+            if t % int(FPS/(7 + 3*self.speed)) == 0:
+                # Horizontal movement and downwards acceleration.
+                self.piece.move(self.piece.direction)
         
         super().manage()  # Manage endgame.
     
@@ -147,6 +147,7 @@ class Tetris(Game):
     
     def try_spawn_next(self):
         """ `piece`s spawn when they stop falling. """
+        
         if self.piece.height == 0:
             self.spawn_next()
     
@@ -161,7 +162,7 @@ class Tetris(Game):
         # Reset `height` and spawn a new `Piece` object.
         self.piece.height = 18
         self.piece = self.Piece()
-        self.piece.preview()
+        self.piece.print_preview()
     
     def check_victory(self):
         """
@@ -185,10 +186,7 @@ class Tetris(Game):
             Whether the game was lost.
         """
 
-        if self.fallen.height > 20:
-            return True
-        else:
-            return False
+        return self.fallen.height > 20
     
     class Piece:
         """
@@ -215,8 +213,8 @@ class Tetris(Game):
 
             # If there is any `stored_shape`, store its value into
             # `active_shape`.
-            if self.stored_shape:
-                self.active_shape = self.stored_shape
+            if Tetris.Piece.stored_shape:
+                self.active_shape = Tetris.Piece.stored_shape
             else:
                 # Otherwise, choose the value of `active_shape`
                 # randomly.
@@ -244,10 +242,10 @@ class Tetris(Game):
                 for (i, j) in self.piece_coords
             ]
         
-        def preview(self):
-            """ Showcase a message with `stored_shape` at the Terminal. """
+        def print_preview(self):
+            """ Showcase `stored_shape`. """
 
-            if self.stored_shape == "T":
+            if Tetris.Piece.stored_shape == "T":
                 drawing = "".join([
                     "=============\n"
                     "Next:\n",
@@ -256,7 +254,7 @@ class Tetris(Game):
                     "|_||_||_|"
                 ])
                 print(drawing)
-            elif self.stored_shape == "J":
+            elif Tetris.Piece.stored_shape == "J":
                 drawing = "".join([
                     "=============\n"
                     "Next:\n",
@@ -265,7 +263,7 @@ class Tetris(Game):
                     "|_||_||_|"
                 ])
                 print(drawing)
-            elif self.stored_shape == "L":
+            elif Tetris.Piece.stored_shape == "L":
                 drawing = "".join([
                     "=============\n"
                     "Next:\n",
@@ -274,7 +272,7 @@ class Tetris(Game):
                     "|_||_||_|"
                 ])
                 print(drawing)
-            elif self.stored_shape == "S":
+            elif Tetris.Piece.stored_shape == "S":
                 drawing = "".join([
                     "=============\n"
                     "Next:\n",
@@ -283,7 +281,7 @@ class Tetris(Game):
                     "|_||_|"
                 ])
                 print(drawing)
-            elif self.stored_shape == "Z":
+            elif Tetris.Piece.stored_shape == "Z":
                 drawing = "".join([
                     "=============\n"
                     "Next:\n",
@@ -292,7 +290,7 @@ class Tetris(Game):
                     "   |_||_|"
                 ])
                 print(drawing)
-            elif self.stored_shape == "I":
+            elif Tetris.Piece.stored_shape == "I":
                 drawing = "".join([
                     "=============\n"
                     "Next:\n",
@@ -300,7 +298,7 @@ class Tetris(Game):
                     "|_||_||_||_|"
                 ])
                 print(drawing)
-            elif self.stored_shape == "O":
+            elif Tetris.Piece.stored_shape == "O":
                 drawing = "".join([
                     "=============\n"
                     "Next:\n",
@@ -323,14 +321,14 @@ class Tetris(Game):
             Tetris.entities["piece"] = []
             # Switch shapes.
             a = self.active_shape
-            s = self.stored_shape
+            s = Tetris.Piece.stored_shape
             self.active_shape = s
             Tetris.Piece.stored_shape = a
             # Reset `height`.
             self.height = 19
 
             self.spawn()
-            self.preview()
+            self.print_preview()
             
             self.lock_switch = True  # Only once for every new `piece`.
         
@@ -349,50 +347,50 @@ class Tetris(Game):
             """
             
             self.coords = (i, j)
-            if self.stored_shape == "T":
+            if shape == "T":
                 self.blocks = {
                     1: (2, ((i-1, j), (i, j), (i+1, j), (i, j-1))),
                     2: (3, ((i-1, j), (i, j), (i, j-1), (i, j+1))),
                     3: (4, ((i-1, j), (i, j), (i+1, j), (i, j+1))),
                     4: (1, ((i, j-1), (i, j), (i+1, j), (i, j+1)))
                 }
-            elif self.stored_shape == "J":
+            elif shape == "J":
                 self.blocks = {
                     1: (2, ((i-1, j-1), (i-1, j), (i, j), (i+1, j))),
                     2: (3, ((i, j-1), (i, j), (i, j+1), (i-1, j+1))),
                     3: (4, ((i-1, j-1), (i, j-1), (i+1, j-1), (i+1, j))),
                     4: (1, ((i-1, j-1), (i, j-1), (i-1, j), (i-1, j+1)))
                 }
-            elif self.stored_shape == "L":
+            elif shape == "L":
                 self.blocks = {
                     1: (2, ((i-1, j), (i, j), (i+1, j), (i+1, j-1))),
                     2: (3, ((i-1, j-1), (i, j-1), (i, j), (i, j+1))),
                     3: (4, ((i-1, j), (i-1, j-1), (i, j-1), (i+1, j-1))),
                     4: (1, ((i-1, j-1), (i-1, j), (i-1, j+1), (i, j+1)))
                 }
-            elif self.stored_shape == "S":
+            elif shape == "S":
                 self.blocks = {
                     1: (2, ((i-1, j), (i, j), (i, j-1), (i+1, j-1))),
                     2: (1, ((i, j+1), (i, j), (i-1, j), (i-1, j-1)))
                 }
-            elif self.stored_shape == "Z":
+            elif shape == "Z":
                 self.blocks = {
                     1: (2, ((i-1, j-1), (i, j-1), (i, j), (i+1, j))),
                     2: (1, ((i, j - 1), (i, j), (i-1, j), (i-1, j+1)))
                 }
-            elif self.stored_shape == "I":
+            elif shape == "I":
                 self.blocks = {
                     1: (2, ((i-1, j), (i, j), (i+1, j), (i+2, j))),
                     2: (1, ((i, j-1), (i, j), (i, j+1), (i, j+2)))
                 }
-            elif self.stored_shape == "O":
+            elif shape == "O":
                 self.blocks = {
                     1: (1, ((i, j), (i, j+1), (i+1, j), (i+1, j+1)))
                 }
 
         def calculate_dimensions(self):
             """
-            Track the boundary dimensions of each `Piece`.
+            Track the boundary dimensions of each `Piece` and update `height`.
 
             Returns
             -------
@@ -452,7 +450,7 @@ class Tetris(Game):
                 ``"down"`` to accelerate the fall).
             """
 
-            # Get all the necessary dimensions to detect whether
+            # Gatter all the necessary dimensions to detect whether
             # movement is possible.
             a, b = CONVERT[direction]
             i, j = self.coords
@@ -520,21 +518,22 @@ class Tetris(Game):
             """ Instant fall, moving down a piece by its ``height``. """
 
             i, j = self.coords
-            self.calculate_dimensions()  # Get current `height`.
+            # Get current `height`.
+            self.calculate_dimensions()
             # Update `blocks`.
             self.place(self.active_shape, i, j+self.height)
             # Move down by `self.height`.
             for block in Tetris.entities["piece"]:
-                i, j = block.coords
-                block.set_position(i, j+self.height)
+                a, b = block.coords
+                block.set_position(a, b+self.height)
     
     class FallenBlocks:
-        """ Structure formed by the fallen piece's `Block`s. """
+        """ The structure formed by the fallen piece's `Block`s. """
 
         height = 0  # Not the same as `Piece.height`.
         
         def grow(self):
-            """ Making a `Piece` part of the structure. """
+            """ Making `Piece` part of the structure. """
 
             # Remove the `Block`s from the `"piece"` container and add
             # them to the `"fallen"` container.
@@ -552,7 +551,7 @@ class Tetris(Game):
         def remove_full_lines(self):
             full_lines = []
             # Group all the completed lines (with 10 aligned `Block`s)
-            # in `full_lines`.
+            # into `full_lines`.
             for b in range(20):
                 line = [block
                         for block in Tetris.entities["fallen"]

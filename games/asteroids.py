@@ -183,7 +183,7 @@ class Asteroids(Game):
         # The chance of a `Bomb` spawning increases from 0.1% up to
         # 0.15% after 3 minutes.
         spawn_rate = 1/3000
-        if t <= 180*FPS and t % 60*FPS == 0:
+        if t <= 180*FPS and t % (60*FPS) == 0:
             spawn_rate += 1/6000
         (spawning,) = random.choices(
             (USE_BOMBS, False),  # No spawns if `USE_BOMBS` is False.
@@ -215,7 +215,7 @@ class Asteroids(Game):
         """
         Defeat condition.
 
-        Occurs when an ``aster`` `Block` reaches either the ``shooter``
+        Occurs when an asteroid `Block` reaches either the ``shooter``
         or the lower border of the grid.
 
         Returns
@@ -231,19 +231,11 @@ class Asteroids(Game):
         # Track the asteroids' height.
         distance = max([1] + [asteroid.coords[1] for asteroid in asteroids])
         
-        if collision:
-            return True
-        elif distance >= 20:  # Hitting the bottom.
-            return True
-        else:
-            return False
+        return bool(collision) or distance >= 20  # Hitting the bottom.
 
     def move_asteroids(self, t):
         """
-        Organizes the asteroids to be destroyed.
-
-        Manages the spawning and the drawing of the asteroid `Block`s,
-        as well as their movement.
+        Organizes the asteroids' display and movement.
 
         Parameters
         ----------
@@ -256,7 +248,7 @@ class Asteroids(Game):
             asteroid.set_position(i, j+1)
 
         # Spawn rate starts at 0.3 per tick, increasing linearly up to
-        # 0.45 per tick after 3 minutes. (0.5+ is unbeatable.)
+        # 0.45 per tick after 3 minutes. (>=0.5 is unbeatable.)
         if t < 180*FPS:
             r = 0.3 + t*0.15/(180*FPS)
         else:
@@ -327,7 +319,7 @@ class Asteroids(Game):
                 self.set_position(i + a, j)
         
         def shoot(self):
-            """ Spawn the `Bullet` from the `Shooter`. """
+            """ Spawn the `Bullet`. """
 
             Asteroids.Bullet(*self.coords)
         

@@ -4,16 +4,17 @@ Instructions on how to expand the project.
 
 ## Adding more games/updating
 
-New game modules should be in `...\brickgame_tkinter\games\`. 
+New game modules should be in `...\brickgame_tkinter\games`. 
 The general rules for consistency are:
 
 ### Import statements
-The general game elements and structures are defined at 
+The general game game structure is defined at 
 `...\brickgame_tkinter\games\game_engine.py`, and the client's 
 definitions pertain to `...\brickgame_tkinter\client.py`.
+
 For each new game, the standard imports are:
 
-```python3
+```python
 from ..constants import *
 from ..client import BaseClient
 from ..block import *
@@ -25,10 +26,10 @@ your preference.
   
 ### Class structure
 The class containing the new game should implement `Game` and 
-be imported to `...\brickgame_tkinter\__main__.py`.
+be imported into `...\brickgame_tkinter\__main__.py`.
 The class may follow this template:
 
-```python3
+```python
 class NewGame(Game):
     """
     Implements `Game` with a snake game.
@@ -121,7 +122,7 @@ class NewGame(Game):
     
     def check_victory(self):
         """
-        Victory occurs when "...".
+        Victory occurs when ...
 
         Returns
         -------
@@ -136,7 +137,7 @@ class NewGame(Game):
     
     def check_defeat(self):
         """
-        Defeat happens if "...".
+        Defeat happens if ...
 
         Returns
         -------
@@ -172,7 +173,7 @@ class NewGame(Game):
 To run the game/check for errors, you will need to create an
 instance of `Client`, for which you can follow this template:
 
-```python3
+```python
 class Client(BaseClient):
     """
     A client for :class:`NewGame`.
@@ -227,7 +228,7 @@ class Client(BaseClient):
 After which you can set up the `if __name__ == '__main__'`
 statement:
 
-```python3
+```python
 def main():
     """ Output-generating commands. """
 
@@ -246,8 +247,8 @@ when running the full package:
  `from newgame import NewGame`;
 * Update the file `...\brickgame_tkinter\high-scores.json` by 
   changing the `Brickgame.__init__()` constructor, adding 
-  `"NewGame": 0,` in `json.dumps()` at the `try` statement (line
-  54).
+  `"NewGame": 0,` in `json.dumps()` at the `try` statement (around
+  line 54).
   Before:
   ```python
   # Create the .json file, if it doesn't already exist.
@@ -282,9 +283,10 @@ when running the full package:
       print(e)
   ```
 * Update the `Brickgame.Selector.__init__()` constructor by 
-  adding `n: NewGame(Brickgame),` to `self.select` (line 127) (`n` is
-  the new number of games).
-    Before:
+  adding `n: NewGame(Brickgame),` to `self.select` (around line 127)
+  (`n` is the new number of games).
+
+  Before:
   ```python
   self.select = {1: Snake(Brickgame),
                  2: Breakout(Brickgame),
@@ -302,14 +304,13 @@ when running the full package:
                  }
   ```
 
-### Updates in `...\brickgame_tkinter\_screen_generator.py` 
-    and in `...\brickgame_tkinter\screens\`
-The image previews for each game are stored in `...\brickgame_tkinter\screens\` 
-and the new game's previews can be built using the *screen_generator.py* 
+### Updates in `...\brickgame_tkinter\_screen_generator.py` and in `...\brickgame_tkinter\screens`
+The image previews for each game are stored in `...\brickgame_tkinter\screens` 
+and the new game's previews can be built using the `screen_generator.py` 
 module. You will need to write three new functions in it with 
 this format:
 
-```python3
+```python
 @create_image
 def draw_newgame_i(file_name, source):
     """ ith preview for Newgame. """
@@ -319,7 +320,7 @@ def draw_newgame_i(file_name, source):
 
 For example:
 
-```python3
+```python
 @create_image
 def draw_tetris_3(file_name, source):
     """ Third preview for Tetris. """
@@ -346,7 +347,7 @@ def draw_tetris_3(file_name, source):
               19: (         3, 4, 5,           )}
 ```
 
-> Remember to add the `ith` letter of the alphabet for identification.
+> Remember to add the next unused letter of the alphabet for identification.
 
 The result previews shall contain 3 new images as 
 `...\brickgame_tkinter\screens\newgame_i_wxh.png`, where:

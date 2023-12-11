@@ -1,4 +1,4 @@
-""" Entry point to the execution of the main package. """
+""" Entry point for the execution of the main package. """
 
 import os
 import json
@@ -30,7 +30,7 @@ elif len(res_images) < 15:
 
 class Brickgame(BaseClient):
     """
-    Manages all the Brickgame and game mechanics and their interactions.
+    Manages all the client and game mechanics and their interactions.
 
     Attributes
     ----------
@@ -85,7 +85,8 @@ class Brickgame(BaseClient):
         if self.environment == "selector":
             self.selector.animate_screen()
         elif self.environment == "game":
-            self.selector.timer = 0  # Reset for the previews loop.
+            # Resetting is required for the previews inner loop. 
+            self.selector.timer = 0
             # Implement the game mechanics and check for endgame.
             self.game.manage(self.ticks)
             # Update `Block`'s mechanics.
@@ -211,9 +212,9 @@ class Brickgame(BaseClient):
             """
             Toggle game previews.
 
-            Iterates through each game previews, with 3 frames per
-            second. The previews were built using the coordinates, in
-            the :mod:`_screen_generator`_ module.
+            Iterates through each game's previews, with 3 frames per
+            second. The previews were built as pixel images, in the
+            :mod:`_screen_generator`_ module.
             """
 
             index = int(3*(self.timer % FPS)/FPS)

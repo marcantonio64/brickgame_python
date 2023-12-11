@@ -24,7 +24,7 @@ The client's interface. It is composed of the game previews
 (3 looping images), ordered alphabetically with capital letters,
 and a High-Scores screen.
 
-The High Scores values are stored in the *high-scores.json* file.
+The High Scores values are stored in the `high-scores.json` file.
 You can reset the values manually or by simply deleting the file before
 running the package again.
 

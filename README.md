@@ -19,7 +19,7 @@ A manual with the rules and controls of each game can be found on
 be seen on `...\brickgame_tkinter\docs\user_guide.md`.
 
 ## Installation
-In the command line, after setting up your directory:
+In the command line, after setting up your directory, download the project with:
 
 ```shell
 git clone https://github.com/marcantonio64/brickgame_tkinter.git
@@ -33,7 +33,7 @@ python -m brickgame_tkinter
 ```
 
 If you want to play a specific game directly, simply add `.games.` and
-the name of the game in lowercase. For instance:
+the name of the game in lowercase. For example:
 
 ```shell
 python -m brickgame_tkinter.games.tetris

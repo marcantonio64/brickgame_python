@@ -28,6 +28,8 @@ class Snake(Game):
     """
 
     direction = "down"
+    start_speed = 10
+    speeds = (start_speed, 2*start_speed)
     growing = False
     entities = {"body": [], "food": []}
     
@@ -47,10 +49,9 @@ class Snake(Game):
         """
 
         super().__init__(source)
-        self.speed = 10
+        self.speed = Snake.start_speed
         self.key_enabled = False
-        """ Allows only one directional movement at a time. """
-
+        
         # Spawn the entities.
         self.snake = self.Body()
         self.food = self.Food()
@@ -81,8 +82,8 @@ class Snake(Game):
 
         if self.running:
             if press:  # Key pressed.
-                if key == "space" and self.last_key != "space":
-                    self.speed *= 2
+                if key == "space":
+                    self.speed = Snake.speeds[1]
                 # Lock direction changes after the first until the next
                 # iteration.
                 elif self.key_enabled:
@@ -97,12 +98,10 @@ class Snake(Game):
                         Snake.direction = "left"
                     elif key == "right" and self.direction != "left":
                         Snake.direction = "right"
-                self.last_key = key
 
             else:  # Key released.
                 if key == "space":
-                    self.speed /= 2
-                self.last_key = ""
+                    self.speed = Snake.speeds[0]
     
     def manage(self, t):
         """
@@ -159,11 +158,7 @@ class Snake(Game):
             Whether the game has been beaten.
         """
 
-        n = len(Snake.entities["body"])
-        if n == 200:
-            return True
-        else:
-            return False
+        return len(Snake.entities["body"]) == 200
     
     def check_defeat(self):
         """
