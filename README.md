@@ -23,10 +23,22 @@ In the command line, after setting up your directory, download the project with:
 
 ```shell
 git clone https://github.com/marcantonio64/brickgame_tkinter.git
-python setup.py install
 ```
 
-Then run the game package with:
+After that, proceed to install the required dependencies with:
+
+### Windows
+
+```shell
+python brickgame_tkinter\setup.py install
+```
+
+### Linux/MacOS
+```bash
+$ python brickgame_tkinter/setup.py install
+```
+
+Finally, run the game package with:
 
 ```shell
 python -m brickgame_tkinter
