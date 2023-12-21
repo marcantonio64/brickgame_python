@@ -55,10 +55,10 @@ python -m brickgame_tkinter.games.tetris
 Bro Code's YouTube video: [Python Full Course for free 🐍](https://www.youtube.com/watch?v=XKHEtdqhLK8&t=41185s).
 
 ## Metadata
-Author: marcantonio64
+**Author:** [marcantonio64](https://github.com/marcantonio64/)
 
-Contact: mafigueiredo08@gmail.com
+**Contact:** [mafigueiredo08@gmail.com](mailto:mafigueiredo08@gmail.com)
 
-Date: 11-Nov-2023
+**Date:** 11-Nov-2023
 
-License: MIT
+**License:** MIT
