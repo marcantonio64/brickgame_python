@@ -4,13 +4,13 @@ Instructions on how to expand the project.
 
 ## Adding more games/updating
 
-New game modules should be in `...\brickgame_tkinter\games`. 
+New game modules should be in `...\brickgame_python\games`. 
 The general rules for consistency are:
 
 ### Import statements
 The general game game structure is defined at 
-`...\brickgame_tkinter\games\game_engine.py`, and the client's 
-definitions pertain to `...\brickgame_tkinter\client.py`.
+`...\brickgame_python\games\game_engine.py`, and the client's 
+definitions pertain to `...\brickgame_python\client.py`.
 
 For each new game, the standard imports are:
 
@@ -26,7 +26,7 @@ your preference.
   
 ### Class structure
 The class containing the new game should implement `Game` and 
-be imported into `...\brickgame_tkinter\__main__.py`.
+be imported into `...\brickgame_python\__main__.py`.
 The class may follow this template:
 
 ```python
@@ -240,12 +240,12 @@ if __name__ == '__main__':
     main()
 ```
 
-### Updates in `...\brickgame_tkinter\__main__.py`
+### Updates in `...\brickgame_python\__main__.py`
 Some changes need to be made in order to properly load the game 
 when running the full package:
-* Import the game into `...\brickgame_tkinter\__main__.py` with 
+* Import the game into `...\brickgame_python\__main__.py` with 
  `from newgame import NewGame`;
-* Update the file `...\brickgame_tkinter\high-scores.json` by 
+* Update the file `...\brickgame_python\high-scores.json` by 
   changing the `Brickgame.__init__()` constructor, adding 
   `"NewGame": 0,` in `json.dumps()` at the `try` statement (around
   line 54).
@@ -304,8 +304,8 @@ when running the full package:
                  }
   ```
 
-### Updates in `...\brickgame_tkinter\_screen_generator.py` and in `...\brickgame_tkinter\screens`
-The image previews for each game are stored in `...\brickgame_tkinter\screens` 
+### Updates in `...\brickgame_python\_screen_generator.py` and in `...\brickgame_python\screens`
+The image previews for each game are stored in `...\brickgame_python\screens` 
 and the new game's previews can be built using the `screen_generator.py` 
 module. You will need to write three new functions in it with 
 this format:
@@ -350,7 +350,7 @@ def draw_tetris_3(file_name, source):
 > Remember to add the next unused letter of the alphabet for identification.
 
 The result previews shall contain 3 new images as 
-`...\brickgame_tkinter\screens\newgame_i_wxh.png`, where:
+`...\brickgame_python\screens\newgame_i_wxh.png`, where:
 * `i` is the index, from 1 to 3;
 * `w` is the current window's width;
 * `h` is the current window's height.

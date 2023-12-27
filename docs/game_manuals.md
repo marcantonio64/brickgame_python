@@ -9,13 +9,13 @@ After install, start the client by setting your directory and running
 the package with:
 
 ```shell
-python -m brickgame_tkinter
+python -m brickgame_python
 ```
 
 Alternatively, run a game directly with, for example:
 
 ```shell
-python -m brickgame_tkinter.games.tetris
+python -m brickgame_python.games.tetris
 ```
 
 ## Selector
@@ -82,7 +82,7 @@ them from reaching the bottom of the grid.
 A `Bomb` may occasionally appear to help you.
 
 > To deactivate the `Bomb` mechanics, access the module
-> `...\brickgame_tkinter\games\asteroids.py` and change the value of
+> `...\brickgame_pythonr\games\asteroids.py` and change the value of
 > the constant `USE_BOMBS` to `False`.
 
 ### Keybindings

@@ -104,7 +104,7 @@ def main(args):
 
     if len(args) != 2:
         print("Please provide one argument to specify the class, for example:")
-        print("python -m brickgame_tkinter.tests.client_test 1")
+        print("python -m brickgame_python.tests.client_test 1")
     else:
         try:
             m = int(args[1])

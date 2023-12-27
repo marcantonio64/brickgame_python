@@ -696,7 +696,7 @@ def main():
                 cond2.lower().startswith("yes")):
             Client()
             print("To play the Brickgame,",
-                  "now run: `python -m brickgame_tkinter`",
+                  "now run: `python -m brickgame_python`",
                   sep=" ")
     exit()
 

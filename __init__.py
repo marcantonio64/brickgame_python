@@ -1,6 +1,6 @@
 """
-Brick Game with tkinter
-=======================
+Brick Game with Python
+======================
 
 This package contains the implementation of a client with some simple
 games. The user will find:
@@ -21,5 +21,5 @@ All these elements were built using `Block` objects as pixels in a
 .. version:: 1.3
 .. license:: MIT
 .. contact:: mafigueiredo08@gmail.com
-.. _`brickgame_tkinter`:
+.. _`brickgame_python`:
 """
